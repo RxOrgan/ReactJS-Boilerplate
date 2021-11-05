@@ -3,7 +3,7 @@
     "prefix": "_newStyle",
     "body": [
       "// others",
-      "import { buildStyles } from '@/utils/styles';",
+      "import { buildStyles } from '@/helpers/buildStyles';",
       "",
       "export const useStyles = buildStyles(() => ({",
       "  root: {",
