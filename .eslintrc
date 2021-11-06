@@ -32,7 +32,6 @@
     "import/no-extraneous-dependencies": 0,
     "@typescript-eslint/explicit-module-boundary-types": 0,
     "linebreak-style": 0,
-    "newline-before-return": 1,
     "@typescript-eslint/no-use-before-define": [
       1,
       {
@@ -102,7 +101,9 @@
     "react/no-array-index-key": 0,
     "@typescript-eslint/indent": 0,
     "indent": 0,
-    "import/order": 0
+    "import/order": 0,
+    "prettier/prettier": 0,
+    "newline-before-return": 0
   },
   "overrides": [
     {

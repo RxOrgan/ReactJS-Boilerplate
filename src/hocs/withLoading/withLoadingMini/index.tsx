@@ -1,7 +1,7 @@
 // libs
 import { ReactElement } from "react";
 // components
-import Spinner from "@/components/atoms/others/Spinner";
+import Spinner from "@/components/atoms/Spinner";
 
 /**
  * withLoadingMini

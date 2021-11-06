@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { HTMLAttributes } from "react";
 import { Props, ReactSVG } from "react-svg";
 // components
-import Spinner from "@/components/atoms/others/Spinner";
+import Spinner from "@/components/atoms/Spinner";
 // types
 import { SvgTypes } from "./type";
 // others

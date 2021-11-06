@@ -1,11 +1,14 @@
 // libs
 import { useSelector } from "react-redux";
 // types
-import { TSelector } from "@/types/redux";
 import { TPageReducer, TRootReducer } from "@/configs/redux";
 
-const useTypedSelector: TSelector = useSelector;
-
+type TSelector = {
+  <TSelected>(
+    selector: (state: TRootReducer) => TSelected,
+    equalityFn?: (left: TSelected, right: TSelected) => boolean
+  ): TSelected;
+};
 type ReturnType<
   TPageName extends TPageReducer,
   TReducerName extends keyof TRootReducer[TPageName],
@@ -18,6 +21,8 @@ type TEqualityFn<
   right: ReturnType<TPageName, TReducerName>
 ) => boolean;
 
+const useTypedSelector: TSelector = useSelector;
+
 /**
  * useStore
  * @description Extract reducer states and add shallow compare
@@ -29,12 +34,12 @@ export const useStore = <
   TPageName extends TPageReducer,
   TReducerName extends keyof TRootReducer[TPageName],
 >(
-    pageName: TPageName,
-    reducerName: TReducerName,
-    equalityFn?: TEqualityFn<TPageName, TReducerName>,
-  ): ReturnType<TPageName, TReducerName> =>
-    useTypedSelector(
-      (state) => (state[pageName] as TRootReducer[TPageName])[reducerName],
-      // Default using shallow compare for reducing re-render
-      equalityFn || ((prev, next) => prev === next),
-    );
+  pageName: TPageName,
+  reducerName: TReducerName,
+  equalityFn?: TEqualityFn<TPageName, TReducerName>,
+): ReturnType<TPageName, TReducerName> =>
+  useTypedSelector(
+    (state) => (state[pageName] as TRootReducer[TPageName])[reducerName],
+    // Default using shallow compare for reducing re-render
+    equalityFn || ((prev, next) => prev === next),
+  );

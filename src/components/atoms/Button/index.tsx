@@ -1,18 +1,18 @@
 // libs
 import { ReactNode } from "react";
 import classNames from "classnames";
-import { Button, ButtonProps } from "@material-ui/core";
+import { Button as MuiButton, ButtonProps } from "@material-ui/core";
 // components
-import Spinner from "@/components/atoms/others/Spinner";
+import Spinner from "@/components/atoms/Spinner";
 // others
 import { useStyles } from "./styles";
 
 type PROPS = { loading: boolean } & ButtonProps;
 
 /**
- * AppButton
+ * Button
  */
-export default function AppButton({
+export default function Button({
   className,
   disabled,
   children,
@@ -21,17 +21,17 @@ export default function AppButton({
   loading,
   ...btnProps
 }: PROPS) {
-  const classes = useStyles("AppButton")();
+  const classes = useStyles("Button")();
 
   return (
-    <Button
+    <MuiButton
       className={classNames(classes.root, className)}
       disabled={loading || disabled}
       {...getIconProps(loading, endIcon, startIcon)}
       {...btnProps}
     >
       {children}
-    </Button>
+    </MuiButton>
   );
 }
 
