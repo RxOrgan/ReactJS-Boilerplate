@@ -79,11 +79,6 @@
     "stylelint-prettier": "1.2.0",
     "typescript": "4.2.4"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "*.{ts,tsx}": [
       "prettier --write",
