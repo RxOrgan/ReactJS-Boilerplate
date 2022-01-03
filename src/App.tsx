@@ -1,13 +1,13 @@
 // libs
 import { Suspense } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { CssBaseline } from "@mui/material";
 // routes
 import appRoutes from "@/routers";
 // providers
 import ConfirmProvider from "./providers/MaterialConfirm";
 import ReduxProvider from "./providers/ReduxProvider";
 // others
+import { AppEffects } from "./AppEffects";
 import { RecursiveRender } from "@/utils/others";
 import "@/styles/index.css";
 
@@ -25,7 +25,7 @@ export default function App() {
         [Switch, {}],
       ]}
     >
-      <CssBaseline />
+      <AppEffects />
       {appRoutes.map((route) => (
         <Route
           key={route.path}
