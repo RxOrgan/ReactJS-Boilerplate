@@ -1,7 +1,7 @@
 // libs
 import { useState, useEffect } from "react";
 // others
-import { getCookie } from "@/utils/storage/cookie";
+import { cookie } from "@/utils/storage/cookie";
 
 /**
  * useCookie
@@ -10,7 +10,7 @@ import { getCookie } from "@/utils/storage/cookie";
 export function useCookie(name: string) {
   const [value, setValue] = useState<string | null>(null);
 
-  const cookieValue = getCookie(name);
+  const cookieValue = cookie.get(name);
   useEffect(() => {
     setValue(cookieValue);
   }, [cookieValue]);

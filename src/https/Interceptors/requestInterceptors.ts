@@ -1,32 +1,28 @@
 // others
-import { CONSTANTS } from "@/constants";
-import { getCookie } from "@/utils/storage/cookie";
+import { STORAGE_KEYS } from "@/constants";
+import { cookie } from "@/utils/storage/cookie";
 import { AXIOS_INSTANCE } from "../AxiosInstance";
 
-type PROPS = {
-  userId: string | undefined;
-};
 /**
  * Intercept request
  */
-const doAxiosRequestIntercept = ({ userId }: PROPS) => {
-  if (userId) {
-    AXIOS_INSTANCE.interceptors.request.use(
-      async (config) => {
-        const accessToken = getCookie(CONSTANTS.AUTH.ACCESS_TOKEN);
+const doAxiosRequestIntercept = () => {
+  AXIOS_INSTANCE.interceptors.request.use(
+    async (config) => {
+      const accessToken = cookie.get(STORAGE_KEYS.ACCESS_TOKEN);
 
-        return {
-          ...config,
-          headers: {
-            [CONSTANTS.AUTH.AUTHORIZATION]: accessToken,
-          },
-        };
-      },
-      (error) => {
-        Promise.reject(error);
-      },
-    );
-  }
+      return {
+        ...config,
+        headers: {
+          [STORAGE_KEYS.AUTHORIZATION]: `Bearer ${accessToken}`,
+          ...config.headers,
+        },
+      };
+    },
+    (error) => {
+      Promise.reject(error);
+    },
+  );
 };
 
 export default doAxiosRequestIntercept;
