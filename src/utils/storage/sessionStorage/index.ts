@@ -1,9 +1,9 @@
 /**
- * setSessionStorage
+ * set
  * @param data
  * @param key
  */
-export function setSessionStorage(key: string, data: string) {
+function set(key: string, data: string) {
   if (typeof window === "undefined") {
     return;
   }
@@ -11,10 +11,10 @@ export function setSessionStorage(key: string, data: string) {
 }
 
 /**
- * removeSessionStorage
+ * remove
  * @param key
  */
-export function removeSessionStorage(key: string) {
+function remove(key: string) {
   if (typeof window === "undefined") {
     return;
   }
@@ -22,13 +22,15 @@ export function removeSessionStorage(key: string) {
 }
 
 /**
- * getSessionStorage
+ * get
  * @param key
  */
-export function getSessionStorage(key: string) {
+function get(key: string) {
   if (typeof window === "undefined") {
     return "";
   }
 
   return sessionStorage.getItem(key);
 }
+
+export const sessionStorageExtra = { get, set, remove };

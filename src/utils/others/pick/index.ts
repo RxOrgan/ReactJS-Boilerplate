@@ -4,20 +4,17 @@
  * @param  {K extends Extract<keyof T, string>} keys
  * @returns {Partial<Pick<T, K>>}
  */
-export const pick = <
-  T extends Record<string, any>,
-  K extends Extract<keyof T, string>,
->(
-    obj: T,
-    keys: readonly K[],
-  ): Partial<Pick<T, K>> =>
-    keys.reduce<Partial<Pick<T, K>>>(
-      (result: Partial<Pick<T, K>>, key: K): Partial<Pick<T, K>> => {
-        if (obj && Object.prototype.hasOwnProperty.call(obj, key)) {
-          result[key] = obj[key];
-        }
+export const pick = <T extends AnyObject, K extends Extract<keyof T, string>>(
+  obj: T,
+  keys: readonly K[],
+): Partial<Pick<T, K>> =>
+  keys.reduce<Partial<Pick<T, K>>>(
+    (result: Partial<Pick<T, K>>, key: K): Partial<Pick<T, K>> => {
+      if (obj && Object.prototype.hasOwnProperty.call(obj, key)) {
+        result[key] = obj[key];
+      }
 
-        return result;
-      },
-      {},
-    );
+      return result;
+    },
+    {},
+  );

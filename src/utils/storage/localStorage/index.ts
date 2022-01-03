@@ -1,9 +1,9 @@
 /**
- * setLocalStorage
+ * set
  * @param data
  * @param key
  */
-export function setLocalStorage(key: string, data: string) {
+function set(key: string, data: string | number | boolean | null | undefined) {
   if (typeof window === "undefined") {
     return;
   }
@@ -11,10 +11,10 @@ export function setLocalStorage(key: string, data: string) {
 }
 
 /**
- * getLocalStorage
+ * get
  * @param key
  */
-export function getLocalStorage(key: string) {
+function get(key: string) {
   if (typeof window === "undefined") {
     return "";
   }
@@ -23,12 +23,14 @@ export function getLocalStorage(key: string) {
 }
 
 /**
- * removeLocalStorage
+ * remove
  * @param key
  */
-export function removeLocalStorage(key: string) {
+function remove(key: string) {
   if (typeof window === "undefined") {
     return;
   }
   localStorage.removeItem(key);
 }
+
+export const localStorageExtra = { get, set, remove };

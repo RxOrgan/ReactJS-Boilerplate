@@ -1,5 +1,5 @@
 /**
- * setCookie
+ * set
  * @description add new cookie item
  * @param name
  * @param value
@@ -7,26 +7,31 @@
  * @param path
  * @param domain
  */
-export function setCookie({
+function set({
   name,
   value,
   days,
+  exactlyTime,
   path = "/",
   domain,
 }: {
   name: string;
   value: string | number | boolean;
   days?: number;
+  exactlyTime?: Date;
   path?: string;
   domain?: string;
 }) {
   let expires = "";
-  let cookie = `${name}=${value || ""}${expires}; path=${path}`;
   if (days) {
     const date = new Date();
     date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
     expires = `; expires=${date.toUTCString()}`;
   }
+  if (exactlyTime) {
+    expires = `; expires=${exactlyTime.toUTCString()}`;
+  }
+  let cookie = `${name}=${value || ""}${expires}; path=${path}`;
   if (domain) {
     cookie += `; domain=${domain}`;
   }
@@ -34,11 +39,11 @@ export function setCookie({
 }
 
 /**
- * getCookie
+ * get
  * @description det cookie by name
  * @param name
  */
-export function getCookie(name: string) {
+function get(name: string) {
   if (typeof document === "undefined") return null;
   const nameEQ = `${name}=`;
   const ca = document.cookie.split(";");
@@ -52,12 +57,14 @@ export function getCookie(name: string) {
 }
 
 /**
- * removeCookie
+ * remove
  * @description delete cookie by name
  * @param name
  */
-export function removeCookie(name: string, domain?: string) {
+function remove(name: string, domain?: string) {
   document.cookie = `${name}=1; path=/;${
     domain ? ` Domain=${domain};` : ""
   } expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
 }
+
+export const cookie = { get, set, remove };

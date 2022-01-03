@@ -1,7 +1,7 @@
 // libs
 import { useCallback, useEffect, useRef } from "react";
 // hooks
-import { useUpdateEffect } from "./useUpdateEffect";
+import { useUpdateEffect } from "../useUpdateEffect";
 
 type PROPS = {
   fn: Function;
@@ -34,7 +34,7 @@ export const useDebounceFn = ({ fn, deps = [], wait = 500 }: PROPS) => {
         fnRef.current(...args);
       }, wait);
     },
-    [wait, cancel]
+    [wait, cancel],
   );
 
   useUpdateEffect(() => {

@@ -1,6 +1,6 @@
 // libs
 import { useEffect, useState } from "react";
-import { useDebounceFn } from "./useDebounceFn";
+import { useDebounceFn } from "./debounceAndThrottle/useDebounceFn";
 
 type WindowSize = {
   width: number;

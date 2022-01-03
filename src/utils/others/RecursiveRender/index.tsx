@@ -1,13 +1,15 @@
+// libs
 import { ReactNode } from "react";
 
 type TRecursiveRender = {
   children: ReactNode;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   structure: [any, { [key: string]: unknown }][];
 };
 /**
  * RecursiveRender
- * @description [[A, {a: 1}], [B, {}]] => <A a={1}><B>{children}</B></A>
  * @return ReactNode
+ * @example [[A, {a: 1}], [B, {}]] => <A a={1}><B>{children}</B></A>
  */
 export function RecursiveRender({ children, structure }: TRecursiveRender) {
   let i;

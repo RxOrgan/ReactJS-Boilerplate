@@ -1,6 +1,9 @@
+// libs
+import axios from "axios";
+import jwtDecode from "jwt-decode";
 // others
-import { CONSTANTS } from "@/constants";
-import { getCookie, setCookie } from "@/utils/storage/cookie";
+import { STORAGE_KEYS } from "@/constants";
+import { cookie } from "@/utils/storage/cookie";
 import { AXIOS_INSTANCE } from "../AxiosInstance";
 
 /**
@@ -9,29 +12,51 @@ import { AXIOS_INSTANCE } from "../AxiosInstance";
 export const doRefreshTokenIntercept = () => {
   AXIOS_INSTANCE.interceptors.response.use(
     (response) => response,
-    (error) => {
+    async (error) => {
       const originalRequest = error.config;
 
       if (error.response?.status === 401 && !originalRequest.isRefreshed) {
         originalRequest.isRefreshed = true;
-        const refreshToken = getCookie(CONSTANTS.AUTH.REFRESH_TOKEN);
-
-        // TODO: Add refresh-token-endpoint
-        return AXIOS_INSTANCE.post("ENDPOINTS.AUTH.REFRESH_TOKEN", {
-          refreshToken,
-        }).then((res) => {
-          setCookie({
-            name: CONSTANTS.AUTH.ACCESS_TOKEN,
-            value: res.data.access.token,
+        const refreshToken = cookie.get(STORAGE_KEYS.REFRESH_TOKEN);
+        return axios
+          .request({
+            method: "GET",
+            baseURL: process.env.GAME_BASE_API,
+            // TODO:
+            url: "type refresh token url here",
+            params: {
+              token: refreshToken,
+            },
+          })
+          .then((res) => {
+            const { exp: refreshTokenExpire = 0 } =
+              jwtDecode<any>(res.data.refresh_token) || {};
+            const { exp: accessTokenExpire = 0 } =
+              jwtDecode<any>(res.data.access_token) || {};
+            cookie.set({
+              name: STORAGE_KEYS.ACCESS_TOKEN,
+              value: res.data.access_token,
+              exactlyTime: new Date(+new Date() + +accessTokenExpire),
+            });
+            cookie.set({
+              name: STORAGE_KEYS.REFRESH_TOKEN,
+              value: res.data.refresh_token,
+              exactlyTime: new Date(+new Date() + +refreshTokenExpire),
+            });
+            return AXIOS_INSTANCE({
+              ...originalRequest,
+              headers: {
+                ...originalRequest.headers,
+                Authorization: `Bearer ${res.data.access_token}`,
+              },
+            });
+          })
+          .catch(() => {
+            cookie.remove(STORAGE_KEYS.ACCESS_TOKEN);
+            cookie.remove(STORAGE_KEYS.REFRESH_TOKEN);
+            // TODO:
+            window.open("Type signin route here", "_self");
           });
-          setCookie({
-            name: CONSTANTS.AUTH.REFRESH_TOKEN,
-            value: res.data.refresh.token,
-          });
-          AXIOS_INSTANCE.defaults.headers.common.Authorization = `Bearer ${res.data.access.token}`;
-
-          return AXIOS_INSTANCE(originalRequest);
-        });
       }
 
       return Promise.reject(error);

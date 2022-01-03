@@ -8,7 +8,7 @@ Install Docker: https://docs.docker.com/get-docker/
 
 ```bash
 Development:
-yarn install
+yarn install --pure-lockfile
 yarn dev
 
 Docker:
@@ -22,3 +22,5 @@ make prod
 # TODO List
 
 - [ ] Docker hot-reload without setting CHOKIDAR_USEPOLLING='true'
+- [ ] Bring react-svg to a plugin
+- [ ] CSS Module className auto suggession

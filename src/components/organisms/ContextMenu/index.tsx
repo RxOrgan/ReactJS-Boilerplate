@@ -1,9 +1,9 @@
 // libs
-import { Menu, MenuItem } from "@material-ui/core";
+import { Menu, MenuItem } from "@mui/material";
 import { MouseEvent, ReactNode, useState, createContext } from "react";
 // others
 import { nullPosition } from "./dataSources";
-import { useStyles } from "./style";
+import classes from "./ContextMenu.module.scss";
 
 export { ContextMenuItem, ContextMenu };
 
@@ -30,7 +30,6 @@ function ContextMenu({
   innerComponent: ReactNode | ReactNode[];
   children: ReactNode | ReactNode[];
 }) {
-  const classes = useStyles("ContextMenu")();
   const [pointerPosition, setPointerPosition] = useState<Position>(
     nullPosition,
   );

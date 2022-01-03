@@ -7,7 +7,7 @@ import Spinner from "@/components/atoms/Spinner";
 // types
 import { SvgTypes } from "./type";
 // others
-import { useStyles } from "./styles";
+import classes from "./Svg.module.scss";
 
 type PROPS = {
   type: SvgTypes;
@@ -22,8 +22,6 @@ type PROPS = {
  * @see https://github.com/tanem/react-svg
  */
 export default function Svg({ type, className, ...props }: PROPS) {
-  const classes = useStyles("Svg")();
-
   return (
     <ReactSVG
       src={`/icons/${type}.svg`}

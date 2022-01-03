@@ -1,16 +1,1 @@
-{
-  "Quick styles creation": {
-    "prefix": "_newStyle",
-    "body": [
-      "// others",
-      "import { buildStyles } from '@/helpers/buildStyles';",
-      "",
-      "export const useStyles = buildStyles(() => ({",
-      "  root: {",
-      "    $1",
-      "  },",
-      "}));"
-    ],
-    "description": "Quick styles creation"
-  }
-}
+{}

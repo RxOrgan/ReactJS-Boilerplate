@@ -1,26 +1,38 @@
+// libs
+import clsx from "clsx";
+import { CSSProperties } from "react";
+// others
+import classes from "./Spinner.module.scss";
+
 type PROPS = {
-  size?: number;
+  width?: number;
+  height?: number;
+  style?: CSSProperties;
+  className?: string;
 };
 
 /**
  * Spinner
  * @description animated Svg
- * @param size Size of Spinner in px (default:  24 = default-ViewPort of icons in /public/icons)
+ * @param style Ex: { width: 24; }
+ * @param className
  */
-export default function Spinner({ size = 24 }: PROPS) {
+export default function Spinner({
+  width = 24,
+  height = 24,
+  className,
+  ...rest
+}: PROPS) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      style={{
-        margin: "auto",
-        display: "inline-block",
-        shapeRendering: "auto",
-      }}
-      width={size}
-      height={size}
       viewBox="0 0 100 100"
       preserveAspectRatio="xMidYMid"
+      width={width}
+      height={height}
+      className={clsx(classes.root, className)}
+      {...rest}
     >
       <g transform="rotate(0 50 50)">
         <rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#1d3f72">
