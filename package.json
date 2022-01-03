@@ -1,5 +1,5 @@
 {
-  "name": "started-pattern-repo",
+  "name": "react-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,8 +11,9 @@
     "checkTs": "tsc --noEmit",
     "lint": "yarn lint:ts && yarn lint:style",
     "lint:ts": "eslint --cache --fix --ext .ts,.tsx ./src",
-    "lint:style": "stylelint --fix \"src/**/style.ts\"",
-    "prettier:fix": "prettier -c \"**/src/**\" --write"
+    "lint:style": "stylelint --fix \"src/**/*.scss\"",
+    "prettier:fix": "prettier -c \"**/src/**\" --write",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@emotion/react": "11.7.1",
@@ -23,12 +24,12 @@
     "clsx": "1.1.1",
     "dayjs": "1.10.7",
     "jwt-decode": "3.1.2",
-    "react-mui-confirm": "1.0.1",
     "query-string": "7.0.1",
     "rc-notification": "4.5.7",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-hook-form": "7.19.0",
+    "react-mui-confirm": "1.0.1",
     "react-redux": "7.2.4",
     "react-router-dom": "5.2.0",
     "react-scripts": "4.0.3",
@@ -64,7 +65,8 @@
     "eslint-plugin-react": "7.23.2",
     "eslint-plugin-react-hooks": "4.2.0",
     "eslint-plugin-unicorn": "31.0.0",
-    "husky": "6.0.0",
+    "husky": "7.0.4",
+    "husky-init": "7.0.0",
     "lint-staged": "10.5.4",
     "prettier": "2.2.1",
     "prettier-eslint": "12.0.0",
@@ -83,17 +85,13 @@
     }
   },
   "lint-staged": {
-    "**/*.{ts,tsx,md,json}": [
-      "yarn prettier:fix",
-      "git add"
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "eslint"
     ],
-    "**/*.{ts,tsx}": [
-      "yarn lint:ts",
-      "git add"
+    "*.scss": [
+      "stylelint --fix"
     ]
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [
