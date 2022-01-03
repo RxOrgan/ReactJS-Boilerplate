@@ -40,7 +40,7 @@ export const buildAsyncAction = <
 ) => (isNotifySuccess?: "notify-success") => {
   const dispatch = useDispatch();
   const { LOADING_LABEL, SUCCESS_LABEL, ERROR_LABEL, XHRHook } = actionConfigs;
-  const { execute: executeXHR, isLoading, response, error } = XHRHook();
+  const [executeXHR, response, isLoading, error] = XHRHook();
 
   const executeAction = (
     props?: TCallbackProps<TRequestData, TRequestParams, TResponse>,
@@ -72,10 +72,10 @@ export const buildAsyncAction = <
     });
   };
 
-  return {
-    execute: executeAction,
-    isLoading,
-    response: (response as unknown) as ShallowExpand<TResponse>,
-    error,
-  };
+  return [executeAction, response as unknown, isLoading, error] as [
+    typeof executeAction,
+    ShallowExpand<TResponse>,
+    boolean,
+    typeof error,
+  ];
 };

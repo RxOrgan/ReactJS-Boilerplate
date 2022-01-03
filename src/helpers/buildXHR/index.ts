@@ -81,10 +81,10 @@ export const buildXHR = <
       .finally(() => setLoading(false));
   };
 
-  return {
-    execute,
-    isLoading,
-    response: (response as unknown) as ShallowExpand<TResponse>,
-    error,
-  };
+  return [execute, response as unknown, isLoading, error] as [
+    typeof execute,
+    ShallowExpand<TResponse>,
+    boolean,
+    typeof error,
+  ];
 };

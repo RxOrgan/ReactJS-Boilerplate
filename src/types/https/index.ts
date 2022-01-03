@@ -46,12 +46,12 @@ export type TAsyncActionConfigs<
   /** Labels for save data in Redux Store */
   ERROR_LABEL: string;
   /** Async Hook built by function buildXHR */
-  XHRHook: () => {
+  XHRHook: () => [
     execute: (
       cbProps?: TCallbackProps<TRequestData, TRequestParams, TResponse>
-    ) => Promise<void>;
-    isLoading: boolean;
-    response: TResponse | null;
-    error: AxiosError | null;
-  };
+    ) => Promise<void>,
+    response: TResponse,
+    isLoading: boolean,
+    error: AxiosError | null,
+  ];
 };
