@@ -4,25 +4,28 @@ import {
   NoticeContent,
   NotificationInstance,
 } from "rc-notification/es/Notification";
+// components
+import Spinner from "@/components/atoms/Spinner";
 
 let notification: NotificationInstance;
-if (typeof window !== "undefined") {
-  Notification.newInstance(
-    {
-      maxCount: 5,
-      style: {
-        top: 15,
-        left: "50%",
-        transform: "translateX(-50%)",
-      },
+Notification.newInstance(
+  {
+    maxCount: 5,
+    style: {
+      top: 15,
+      left: "50%",
+      transform: "translateX(-50%)",
     },
-    (n) => {
-      notification = n;
-    },
-  );
-}
+  },
+  (n) => {
+    notification = n;
+  },
+);
 
 type TConfigs = Omit<NoticeContent, "content">;
+type TLoadingConfigs = Omit<NoticeContent, "content" | "key" | "duration"> & {
+  key: string;
+};
 
 const styles = {
   display: "flex",
@@ -34,7 +37,7 @@ const styles = {
 export const notify = {
   success: (content: string, configs?: TConfigs) =>
     notification.notice({
-      duration: 3,
+      duration: 2,
       closable: false,
       ...configs,
       content: (
@@ -80,19 +83,52 @@ export const notify = {
         </div>
       ),
     }),
+  pure: (content: string, configs?: TConfigs) =>
+    notification.notice({
+      duration: 4,
+      closable: true,
+      ...configs,
+      content: (
+        <div style={styles}>
+          <span style={{ marginLeft: 8 }}>{content}</span>
+        </div>
+      ),
+    }),
   /**
-   * removeNotice
-   * @description Remove notice by key
+   * loading
+   * @description Create a loading notification that can be closed later
+   * @param content
+   * @param key
+   * @example
+   * notify.loading("Notify message", { key: "a-unique-key" });
+   * // Close notify by call
+   * notify.remove("a-unique-key");
    */
-  removeNotice: (key: string) => {
-    notification.removeNotice(key);
-  },
+  loading: (content: string, configs: TLoadingConfigs) =>
+    notification.notice({
+      duration: 0,
+      closable: true,
+      ...configs,
+      content: (
+        <div style={styles}>
+          <Spinner />
+          <span style={{ marginLeft: 8 }}>{content}</span>
+        </div>
+      ),
+    }),
   /**
    * destroy
    * @description Destroy all notices
    */
   destroy: () => {
     notification.destroy();
+  },
+  /**
+   * remove
+   * @description Remove notice by key
+   */
+  remove: (key: string) => {
+    notification.removeNotice(key);
   },
 };
 
@@ -116,7 +152,7 @@ function ErrorIcon() {
   );
 }
 
-export function InfoIcon() {
+function InfoIcon() {
   return (
     <svg
       viewBox="64 64 896 896"
@@ -136,7 +172,7 @@ export function InfoIcon() {
   );
 }
 
-export function SuccessIcon() {
+function SuccessIcon() {
   return (
     <svg
       viewBox="64 64 896 896"

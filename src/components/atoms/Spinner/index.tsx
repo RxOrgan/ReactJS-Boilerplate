@@ -5,8 +5,6 @@ import { CSSProperties } from "react";
 import classes from "./Spinner.module.scss";
 
 type PROPS = {
-  width?: number;
-  height?: number;
   style?: CSSProperties;
   className?: string;
 };
@@ -17,20 +15,13 @@ type PROPS = {
  * @param style Ex: { width: 24; }
  * @param className
  */
-export default function Spinner({
-  width = 24,
-  height = 24,
-  className,
-  ...rest
-}: PROPS) {
+export default function Spinner({ className, ...rest }: PROPS) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       viewBox="0 0 100 100"
       preserveAspectRatio="xMidYMid"
-      width={width}
-      height={height}
       className={clsx(classes.root, className)}
       {...rest}
     >
