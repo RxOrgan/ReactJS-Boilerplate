@@ -83,6 +83,10 @@ export const notify = {
         </div>
       ),
     }),
+  /**
+   * pure
+   * @description Show notification without icon
+   */
   pure: (content: string, configs?: TConfigs) =>
     notification.notice({
       duration: 4,
