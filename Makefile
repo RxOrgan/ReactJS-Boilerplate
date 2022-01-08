@@ -1,4 +1,7 @@
 # Development enviroment
+install:
+	yarn install --pure-lockfile
+
 build-dev: 
 	docker-compose -f docker-compose.dev.yml build
 
