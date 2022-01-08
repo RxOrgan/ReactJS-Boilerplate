@@ -80,6 +80,20 @@ export const notify = {
         </div>
       ),
     }),
+  /**
+   * removeNotice
+   * @description Remove notice by key
+   */
+  removeNotice: (key: string) => {
+    notification.removeNotice(key);
+  },
+  /**
+   * destroy
+   * @description Destroy all notices
+   */
+  destroy: () => {
+    notification.destroy();
+  },
 };
 
 // Icons
