@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 import classes from "./Layout.module.scss";
 
 type TProps = {
-  children: ReactNode;
+  children?: ReactNode;
 };
 /**
  * Layout
