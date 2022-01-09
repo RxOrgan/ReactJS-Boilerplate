@@ -1,5 +1,3 @@
-export * from "./routes";
-
 export const LANGUAGES = {
   EN: "en",
   VN: "vi",

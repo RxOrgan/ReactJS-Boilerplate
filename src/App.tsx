@@ -2,7 +2,7 @@
 import { Suspense } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 // routes
-import appRoutes from "@/routers";
+import appRoutes from "@/routes";
 // providers
 import ConfirmProvider from "./providers/MaterialConfirm";
 import ReduxProvider from "./providers/ReduxProvider";

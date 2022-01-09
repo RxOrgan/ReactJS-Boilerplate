@@ -23,23 +23,24 @@ export const useRouter = () => {
   // Memoize so that a new object is only returned if something changes
   return useMemo(
     () => ({
-      // For convenience add push(), replace(), pathname at top level
+      // For convenience add push(), replace(), pathname, state at top level
       push: history.push,
       replace: history.replace,
       pathname,
-      // Merge params and parsed query string into single "query" object
+      state: (location.state || {}) as AnyObject,
+      // Merge params and parsed query string into single "params" object
       // so that they can be used interchangeably.
       // Example: /:topic?sort=popular -> { topic: "react", sort: "popular" }
-      query: {
+      params: {
         ...queryString.parse(location.search), // Convert string to object
         ...params,
-      },
+      } as AnyObject,
       // Include match, location, history objects so we have
       // access to extra React Router functionality if needed.
       match,
       location,
       history,
     }),
-    [params, match, location, history, pathname]
+    [params, match, location, history, pathname],
   );
 };
