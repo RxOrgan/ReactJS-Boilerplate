@@ -103,7 +103,13 @@
     "indent": 0,
     "import/order": 0,
     "prettier/prettier": 0,
-    "newline-before-return": 0
+    "newline-before-return": 0,
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": ["@mui/*/*/*"]
+      }
+    ]
   },
   "overrides": [
     {

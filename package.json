@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "react-app-rewired start",
-    "dev:polling": "CHOKIDAR_USEPOLLING='true' react-app-rewired start",
     "start:prod": "npx serve -s build",
     "build": "react-app-rewired build -c",
     "test": "react-app-rewired test",

@@ -1,24 +1,26 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // libs
 import { useCallback, useEffect, useRef } from "react";
 // hooks
 import { useUpdateEffect } from "../useUpdateEffect";
 
-type PROPS = {
-  fn: Function;
-  deps?: Array<any>;
-  wait?: number;
-};
 /**
  * useDebounceFn
  * @see https://github.com/umijs/hooks/blob/master/packages/hooks/src/useDebounceFn/index.ts
  * @param fn
  * @param deps
  * @param wait
+ * @example
+ * const [debouncedFn] = useDebounceFn(() => { console.log("example"); })
  */
-export const useDebounceFn = ({ fn, deps = [], wait = 500 }: PROPS) => {
+export const useDebounceFn = (
+  fn: (...props: any) => void,
+  wait = 300,
+  deps = [],
+) => {
   const timer = useRef<any>();
 
-  const fnRef = useRef<Function>(fn);
+  const fnRef = useRef<(...props: any) => void>(fn);
   fnRef.current = fn;
 
   const cancel = useCallback(() => {
@@ -27,7 +29,7 @@ export const useDebounceFn = ({ fn, deps = [], wait = 500 }: PROPS) => {
     }
   }, []);
 
-  const run = useCallback(
+  const execute = useCallback(
     (...args: any) => {
       cancel();
       timer.current = setTimeout(() => {
@@ -38,15 +40,12 @@ export const useDebounceFn = ({ fn, deps = [], wait = 500 }: PROPS) => {
   );
 
   useUpdateEffect(() => {
-    run();
+    execute();
 
     return cancel;
-  }, [...deps, run]);
+  }, [...deps, execute]);
 
   useEffect(() => cancel, []);
 
-  return {
-    run,
-    cancel,
-  };
+  return [execute, cancel];
 };

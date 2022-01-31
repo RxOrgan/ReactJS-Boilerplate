@@ -15,10 +15,8 @@ type WindowSize = {
 export function useWindowSize(): WindowSize {
   const [windowSize, setWindowSize] = useState<WindowSize>(getWindowSize());
 
-  const { run: updateWindowSize } = useDebounceFn({
-    fn: () => {
-      setWindowSize(getWindowSize());
-    },
+  const [updateWindowSize] = useDebounceFn(() => {
+    setWindowSize(getWindowSize());
   });
 
   useEffect(() => {
