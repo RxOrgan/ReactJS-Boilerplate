@@ -18,26 +18,33 @@ type THttpMethod =
   | "LINK"
   | "UNLINK";
 
-export type TApiConfigs<TResponse = AnyObject> = {
+export type TApiConfigs<TResponse, TUrlParams> = {
   /** API URL */
-  url?: string;
+  url: string | ((params: TUrlParams) => string);
   /** http method */
   method: THttpMethod;
   /** Default response data for initializing Page at first render */
   initialValue: TResponse;
 } & Omit<AxiosRequestConfig, "url" | "method">;
 
-export type TCallbackProps<TRequestData, TRequestParams, TResponse> = {
+export type TCallbackProps<
+  TRequestData,
+  TRequestParams,
+  TResponse,
+  TUrlParams,
+> = {
   data?: ShallowExpand<TRequestData>;
   params?: ShallowExpand<TRequestParams>;
+  urlParams?: TUrlParams;
   cbSuccess?: (responseData: TResponse) => void;
   cbError?: (errors: AxiosError) => void;
 } & Omit<AxiosRequestConfig, "data" | "params">;
 
 export type TAsyncActionConfigs<
-  TRequestData = AnyObject,
-  TResponse = AnyObject,
-  TRequestParams = AnyObject,
+  TRequestData,
+  TResponse,
+  TRequestParams,
+  TUrlParams,
 > = {
   /** Labels for save data in Redux Store */
   LOADING_LABEL: string;
@@ -48,7 +55,12 @@ export type TAsyncActionConfigs<
   /** Async Hook built by function buildXHR */
   XHRHook: () => [
     execute: (
-      cbProps?: TCallbackProps<TRequestData, TRequestParams, TResponse>
+      cbProps?: TCallbackProps<
+        TRequestData,
+        TRequestParams,
+        TResponse,
+        TUrlParams
+      >
     ) => Promise<void>,
     response: TResponse,
     isLoading: boolean,

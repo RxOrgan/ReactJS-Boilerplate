@@ -13,37 +13,43 @@ import { notify } from "@/utils/notify";
  * @param actionConfigs
  * @example
  * // ...Typescript
- * export const useGetUsers = buildXHR<Request, Response>({
+ * export const useFetchUsers = buildXHR<Request, Response>({
     url: "/v1/users",
     method: "GET",
 });
-  export const useGetUsersAction = buildAsyncAction({
-      XHRHook: useGetUsers,
+  export const useFetchUsersAction = buildAsyncAction({
+      XHRHook: useFetchUsers,
       LOADING_LABEL: "...(REDUX_LABEL)",
       SUCCESS_LABEL: "...(REDUX_LABEL)",
       ERROR_LABEL: "...(REDUX_LABEL)",
   });
   // Usage in React Component
-  const { execute, isLoading, response } = useGetUsers();
-  execute({
+  const [fetchUsers, { isLoading, response }] = useFetchUsers();
+  fetchUsers({
    cbSuccess: (res) => {
      // This is on success callback
    }
   });
  */
 export const buildAsyncAction = <
-  TRequestData = AnyObject,
   TResponse = AnyObject,
+  TRequestData = AnyObject,
   TRequestParams = AnyObject,
+  TUrlParams = AnyObject,
 >(
-  actionConfigs: TAsyncActionConfigs<TRequestData, TResponse, TRequestParams>,
+  actionConfigs: TAsyncActionConfigs<
+    TRequestData,
+    TResponse,
+    TRequestParams,
+    TUrlParams
+  >,
 ) => (isNotifySuccess?: "notify-success") => {
   const dispatch = useDispatch();
   const { LOADING_LABEL, SUCCESS_LABEL, ERROR_LABEL, XHRHook } = actionConfigs;
   const [executeXHR, response, isLoading, error] = XHRHook();
 
   const executeAction = (
-    props?: TCallbackProps<TRequestData, TRequestParams, TResponse>,
+    props?: TCallbackProps<TRequestData, TRequestParams, TResponse, TUrlParams>,
   ) => {
     const { cbSuccess, cbError, ...runtimeConfigs } = props || {};
 
@@ -72,10 +78,15 @@ export const buildAsyncAction = <
     });
   };
 
-  return [executeAction, response as unknown, isLoading, error] as [
+  return [
+    executeAction,
+    { response: response as unknown, isLoading, error },
+  ] as [
     typeof executeAction,
-    ShallowExpand<TResponse>,
-    boolean,
-    typeof error,
+    {
+      response: ShallowExpand<TResponse>;
+      isLoading: boolean;
+      error: typeof error;
+    },
   ];
 };

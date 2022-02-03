@@ -5,7 +5,7 @@ import { AxiosError, AxiosInstance, AxiosResponse } from "axios";
 import { TApiConfigs, TCallbackProps } from "@/types";
 // others
 import { AXIOS_INSTANCE } from "@/https/AxiosInstance";
-import { defaultHttpError } from "../tools";
+import { defaultHttpError, makeRequestUrl } from "../tools";
 import { notify } from "@/utils/notify";
 
 /**
@@ -13,7 +13,7 @@ import { notify } from "@/utils/notify";
  * @description build a like-useAsync-hook for request API
  * @param configs
  * @return React Hook for requesting API
- * @example
+ * @example Static API_URL
  * type TRequest = {
     email: string;
     password: string;
@@ -34,19 +34,48 @@ import { notify } from "@/utils/notify";
      initialValue: {}
    });
    // Usage in React Component
-     const { execute, isLoading, response } = useRequestRegisterAccount();
-     execute({
-       cbSuccess: (res) => {
+     const [requestRegisterAccount, { isLoading, response }] = useRequestRegisterAccount();
+     requestRegisterAccount({
+       // ...
+       cbSuccess: (response) => {
+         // This is on success callback
+       }
+     });
+ * @example Dynamic API_URL
+ * type TUrlParams = {
+ *  param1: string
+ * }
+   type TResponse = {
+    name: string;
+   };
+   export const useRequestRegisterAccount = buildXHR<
+     undefined,
+     TResponse,
+     undefined,
+     TUrlParams,
+   >({
+     url: ({ param1 }) => `/url/with/params/${param1}/`,
+     method: "POST",
+     initialValue: {}
+   });
+   // Usage in React Component
+     const [requestRegisterAccount, { isLoading, response }] = useRequestRegisterAccount();
+     requestRegisterAccount({
+       urlParams: {
+        param1: "example",
+       },
+       cbSuccess: (response) => {
          // This is on success callback
        }
      });
  */
 export const buildXHR = <
-  TRequestData = AnyObject,
   TResponse = AnyObject,
+  TRequestData = AnyObject,
   TRequestParams = AnyObject,
+  TUrlParams = AnyObject,
 >(
-  { initialValue, ...defaultConfigs }: TApiConfigs<TResponse>,
+  { initialValue, url, ...defaultConfigs }: TApiConfigs<TResponse, TUrlParams>,
   axiosInstance: AxiosInstance = AXIOS_INSTANCE,
 ) => (isNotifySuccess?: "notify-success") => {
   const [isLoading, setLoading] = useState(false);
@@ -54,13 +83,19 @@ export const buildXHR = <
   const [error, setError] = useState<AxiosError | null>(null);
 
   const execute = (
-    cbProps?: TCallbackProps<TRequestData, TRequestParams, TResponse>,
+    cbProps?: TCallbackProps<
+      TRequestData,
+      TRequestParams,
+      TResponse,
+      TUrlParams
+    >,
   ) => {
-    const { cbSuccess, cbError, ...runtimeConfigs } = cbProps || {};
+    const { cbSuccess, cbError, urlParams, ...runtimeConfigs } = cbProps || {};
     setLoading(true);
 
     return axiosInstance
       .request({
+        url: makeRequestUrl<TUrlParams>(url, urlParams),
         ...defaultConfigs,
         ...runtimeConfigs,
         headers: {
@@ -81,10 +116,12 @@ export const buildXHR = <
       .finally(() => setLoading(false));
   };
 
-  return [execute, response as unknown, isLoading, error] as [
+  return [execute, { isLoading, response: response as unknown, error }] as [
     typeof execute,
-    ShallowExpand<TResponse>,
-    boolean,
-    typeof error,
+    {
+      isLoading: boolean;
+      response: ShallowExpand<TResponse>;
+      error: typeof error;
+    },
   ];
 };
