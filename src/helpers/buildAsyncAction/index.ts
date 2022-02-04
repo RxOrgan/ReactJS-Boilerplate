@@ -38,15 +38,15 @@ export const buildAsyncAction = <
   TUrlParams = AnyObject,
 >(
   actionConfigs: TAsyncActionConfigs<
-    TRequestBody,
     TResponse,
+    TRequestBody,
     TRequestQuery,
     TUrlParams
   >,
 ) => (isNotifySuccess?: "notify-success") => {
   const dispatch = useDispatch();
   const { LOADING_LABEL, SUCCESS_LABEL, ERROR_LABEL, XHRHook } = actionConfigs;
-  const [executeXHR, response, isLoading, error] = XHRHook();
+  const [executeXHR, { response, isLoading, error }] = XHRHook();
 
   const executeAction = (
     props?: TCallbackProps<TRequestBody, TRequestQuery, TResponse, TUrlParams>,

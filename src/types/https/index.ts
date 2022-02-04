@@ -62,8 +62,10 @@ export type TAsyncActionConfigs<
         TUrlParams
       >
     ) => Promise<void>,
-    response: TResponse,
-    isLoading: boolean,
-    error: AxiosError | null,
+    props: {
+      isLoading: boolean;
+      response: TResponse;
+      error: AxiosError | null;
+    },
   ];
 };
