@@ -28,22 +28,22 @@ export type TApiConfigs<TResponse, TUrlParams> = {
 } & Omit<AxiosRequestConfig, "url" | "method">;
 
 export type TCallbackProps<
-  TRequestData,
-  TRequestParams,
   TResponse,
+  TRequestBody,
+  TRequestQuery,
   TUrlParams,
 > = {
-  data?: ShallowExpand<TRequestData>;
-  params?: ShallowExpand<TRequestParams>;
+  data?: ShallowExpand<TRequestBody>;
+  params?: ShallowExpand<TRequestQuery>;
   urlParams?: TUrlParams;
   cbSuccess?: (responseData: TResponse) => void;
   cbError?: (errors: AxiosError) => void;
 } & Omit<AxiosRequestConfig, "data" | "params">;
 
 export type TAsyncActionConfigs<
-  TRequestData,
   TResponse,
-  TRequestParams,
+  TRequestBody,
+  TRequestQuery,
   TUrlParams,
 > = {
   /** Labels for save data in Redux Store */
@@ -56,8 +56,8 @@ export type TAsyncActionConfigs<
   XHRHook: () => [
     execute: (
       cbProps?: TCallbackProps<
-        TRequestData,
-        TRequestParams,
+        TRequestBody,
+        TRequestQuery,
         TResponse,
         TUrlParams
       >

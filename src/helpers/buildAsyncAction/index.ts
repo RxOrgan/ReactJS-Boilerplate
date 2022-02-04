@@ -33,14 +33,14 @@ import { notify } from "@/utils/notify";
  */
 export const buildAsyncAction = <
   TResponse = AnyObject,
-  TRequestData = AnyObject,
-  TRequestParams = AnyObject,
+  TRequestBody = AnyObject,
+  TRequestQuery = AnyObject,
   TUrlParams = AnyObject,
 >(
   actionConfigs: TAsyncActionConfigs<
-    TRequestData,
+    TRequestBody,
     TResponse,
-    TRequestParams,
+    TRequestQuery,
     TUrlParams
   >,
 ) => (isNotifySuccess?: "notify-success") => {
@@ -49,7 +49,7 @@ export const buildAsyncAction = <
   const [executeXHR, response, isLoading, error] = XHRHook();
 
   const executeAction = (
-    props?: TCallbackProps<TRequestData, TRequestParams, TResponse, TUrlParams>,
+    props?: TCallbackProps<TRequestBody, TRequestQuery, TResponse, TUrlParams>,
   ) => {
     const { cbSuccess, cbError, ...runtimeConfigs } = props || {};
 

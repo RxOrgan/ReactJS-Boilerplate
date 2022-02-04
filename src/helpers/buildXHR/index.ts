@@ -71,8 +71,8 @@ import { notify } from "@/utils/notify";
  */
 export const buildXHR = <
   TResponse = AnyObject,
-  TRequestData = AnyObject,
-  TRequestParams = AnyObject,
+  TRequestBody = AnyObject,
+  TRequestQuery = AnyObject,
   TUrlParams = AnyObject,
 >(
   { initialValue, url, ...defaultConfigs }: TApiConfigs<TResponse, TUrlParams>,
@@ -83,12 +83,7 @@ export const buildXHR = <
   const [error, setError] = useState<AxiosError | null>(null);
 
   const execute = (
-    cbProps?: TCallbackProps<
-      TRequestData,
-      TRequestParams,
-      TResponse,
-      TUrlParams
-    >,
+    cbProps?: TCallbackProps<TRequestBody, TRequestQuery, TResponse, TUrlParams>,
   ) => {
     const { cbSuccess, cbError, urlParams, ...runtimeConfigs } = cbProps || {};
     setLoading(true);

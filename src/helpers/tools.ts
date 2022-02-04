@@ -24,7 +24,7 @@ export function makeRequestUrl<TUrlParams>(
 ) {
   if (typeof url === "string") return url;
   if (typeof url === "function" && urlParams) return url(urlParams);
-  if (process.env.NODE_ENV === "development")
-    throw new Error("API's URL must be string or function");
-  return `${url}`;
+  throw new Error(
+    "API's URL must be string or a function with urlParams is provided!",
+  );
 }
