@@ -24,7 +24,7 @@ export type TApiConfigs<TResponse, TUrlParams> = {
   /** http method */
   method: THttpMethod;
   /** Default response data for initializing Page at first render */
-  initialValue: TResponse;
+  initialResponseValues: TResponse;
 } & Omit<AxiosRequestConfig, "url" | "method">;
 
 export type TCallbackProps<

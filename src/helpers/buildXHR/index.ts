@@ -31,7 +31,7 @@ import { notify } from "@/utils/notify";
    >({
      url: "/example/api/endpoint/",
      method: "POST",
-     initialValue: {}
+     initialResponseValues: {}
    });
    // Usage in React Component
      const [requestRegisterAccount, { isLoading, response }] = useRequestRegisterAccount();
@@ -56,7 +56,7 @@ import { notify } from "@/utils/notify";
    >({
      url: ({ param1 }) => `/url/with/params/${param1}/`,
      method: "POST",
-     initialValue: {}
+     initialResponseValues: {}
    });
    // Usage in React Component
      const [requestRegisterAccount, { isLoading, response }] = useRequestRegisterAccount();
@@ -75,11 +75,15 @@ export const buildXHR = <
   TRequestQuery = AnyObject,
   TUrlParams = AnyObject,
 >(
-  { initialValue, url, ...defaultConfigs }: TApiConfigs<TResponse, TUrlParams>,
+  {
+    initialResponseValues,
+    url,
+    ...defaultConfigs
+  }: TApiConfigs<TResponse, TUrlParams>,
   axiosInstance: AxiosInstance = AXIOS_INSTANCE,
 ) => (isNotifySuccess?: "notify-success") => {
   const [isLoading, setLoading] = useState(false);
-  const [response, setResponse] = useState<TResponse>(initialValue);
+  const [response, setResponse] = useState<TResponse>(initialResponseValues);
   const [error, setError] = useState<AxiosError | null>(null);
 
   const execute = (
