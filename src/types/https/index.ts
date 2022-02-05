@@ -40,6 +40,13 @@ export type TCallbackProps<
   cbError?: (errors: AxiosError) => void;
 } & Omit<AxiosRequestConfig, "data" | "params">;
 
+export type TXhrReturn<TResponse = AnyObject> = {
+  isLoading: boolean;
+  response: ShallowExpand<TResponse>;
+  error: AxiosError | null;
+  isUpdated: boolean;
+};
+
 export type TAsyncActionConfigs<
   TResponse,
   TRequestBody,
@@ -62,10 +69,6 @@ export type TAsyncActionConfigs<
         TUrlParams
       >
     ) => Promise<void>,
-    props: {
-      isLoading: boolean;
-      response: TResponse;
-      error: AxiosError | null;
-    },
+    props: TXhrReturn<TResponse>,
   ];
 };

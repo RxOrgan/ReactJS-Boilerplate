@@ -1,7 +1,7 @@
 // libs
 import { useDispatch } from "react-redux";
 // types
-import { TAsyncActionConfigs, TCallbackProps } from "@/types";
+import { TAsyncActionConfigs, TCallbackProps, TXhrReturn } from "@/types";
 // others
 import { defaultHttpError } from "../tools";
 import { notify } from "@/utils/notify";
@@ -46,7 +46,7 @@ export const buildAsyncAction = <
 ) => (isNotifySuccess?: "notify-success") => {
   const dispatch = useDispatch();
   const { LOADING_LABEL, SUCCESS_LABEL, ERROR_LABEL, XHRHook } = actionConfigs;
-  const [executeXHR, { response, isLoading, error }] = XHRHook();
+  const [executeXHR, { response, isLoading, error, isUpdated }] = XHRHook();
 
   const executeAction = (
     props?: TCallbackProps<TResponse, TRequestBody, TRequestQuery, TUrlParams>,
@@ -80,13 +80,6 @@ export const buildAsyncAction = <
 
   return [
     executeAction,
-    { response: response as unknown, isLoading, error },
-  ] as [
-    typeof executeAction,
-    {
-      response: ShallowExpand<TResponse>;
-      isLoading: boolean;
-      error: typeof error;
-    },
-  ];
+    { response: response as unknown, isLoading, error, isUpdated },
+  ] as [typeof executeAction, TXhrReturn<TResponse>];
 };

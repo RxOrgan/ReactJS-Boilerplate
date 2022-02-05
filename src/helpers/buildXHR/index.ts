@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { AxiosError, AxiosInstance, AxiosResponse } from "axios";
 // types
-import { TApiConfigs, TCallbackProps } from "@/types";
+import { TApiConfigs, TCallbackProps, TXhrReturn } from "@/types";
 // others
 import { AXIOS_INSTANCE } from "@/https/AxiosInstance";
 import { defaultHttpError, makeRequestUrl } from "../tools";
@@ -115,12 +115,13 @@ export const buildXHR = <
       .finally(() => setLoading(false));
   };
 
-  return [execute, { isLoading, response: response as unknown, error }] as [
-    typeof execute,
+  return [
+    execute,
     {
-      isLoading: boolean;
-      response: ShallowExpand<TResponse>;
-      error: typeof error;
+      isLoading,
+      response: response as unknown,
+      error,
+      isUpdated: response === initialResponseValues,
     },
-  ];
+  ] as [typeof execute, TXhrReturn<TResponse>];
 };
