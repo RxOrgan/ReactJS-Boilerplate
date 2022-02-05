@@ -87,7 +87,7 @@ export const buildXHR = <
   const [error, setError] = useState<AxiosError | null>(null);
 
   const execute = (
-    cbProps?: TCallbackProps<TRequestBody, TRequestQuery, TResponse, TUrlParams>,
+    cbProps?: TCallbackProps<TResponse, TRequestBody, TRequestQuery, TUrlParams>,
   ) => {
     const { cbSuccess, cbError, urlParams, ...runtimeConfigs } = cbProps || {};
     setLoading(true);

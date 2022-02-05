@@ -56,9 +56,9 @@ export type TAsyncActionConfigs<
   XHRHook: () => [
     execute: (
       cbProps?: TCallbackProps<
+        TResponse,
         TRequestBody,
         TRequestQuery,
-        TResponse,
         TUrlParams
       >
     ) => Promise<void>,

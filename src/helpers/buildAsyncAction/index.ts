@@ -49,7 +49,7 @@ export const buildAsyncAction = <
   const [executeXHR, { response, isLoading, error }] = XHRHook();
 
   const executeAction = (
-    props?: TCallbackProps<TRequestBody, TRequestQuery, TResponse, TUrlParams>,
+    props?: TCallbackProps<TResponse, TRequestBody, TRequestQuery, TUrlParams>,
   ) => {
     const { cbSuccess, cbError, ...runtimeConfigs } = props || {};
 
