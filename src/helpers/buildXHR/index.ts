@@ -121,7 +121,8 @@ export const buildXHR = <
       isLoading,
       response: response as unknown,
       error,
-      isUpdated: response === initialResponseValues,
+      // TODO: Is below isExecuted working?
+      isExecuted: isLoading || response !== initialResponseValues,
     },
   ] as [typeof execute, TXhrReturn<TResponse>];
 };
