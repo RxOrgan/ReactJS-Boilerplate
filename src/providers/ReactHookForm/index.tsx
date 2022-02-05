@@ -7,6 +7,7 @@ import { AnyObjectSchema } from "yup";
 type TProps = {
   children: ReactNode | ReactNode[];
   validateSchema: AnyObjectSchema;
+  defaultValues?: AnyObject;
 };
 /**
  * ReactHookForm
@@ -14,10 +15,15 @@ type TProps = {
  * @param validateSchema - Yup validate schema
  * @param children
  */
-export default function ReactHookForm({ children, validateSchema }: TProps) {
+export function ReactHookForm({
+  children,
+  validateSchema,
+  defaultValues,
+}: TProps) {
   const formProps = useForm({
     resolver: yupResolver(validateSchema),
     mode: "onChange",
+    defaultValues,
   });
 
   return <FormProvider {...formProps}>{children}</FormProvider>;

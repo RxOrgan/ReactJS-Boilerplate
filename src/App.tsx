@@ -4,8 +4,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 // routes
 import appRoutes from "@/routes";
 // providers
-import ConfirmProvider from "./providers/MaterialConfirm";
-import ReduxProvider from "./providers/ReduxProvider";
+import { ConfirmProvider, ReduxProvider } from "./providers";
 // others
 import { AppEffects } from "./AppEffects";
 import { RecursiveRender } from "@/utils/others";
