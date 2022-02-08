@@ -1,6 +1,8 @@
 // libs
 import { AxiosError, AxiosRequestConfig } from "axios";
 
+export type TParam = string | number;
+
 export type TPreprocessRequestPayload = {
   data: AnyObject | null;
   searchParams?: AnyObject | null;
