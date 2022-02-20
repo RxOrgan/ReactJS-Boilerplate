@@ -1,8 +1,6 @@
 // libs
 import { CSSProperties, ReactNode } from "react";
 import classNames from "classnames";
-// hooks
-import { useTranslate } from "@/hooks/useTranslate";
 
 type TProps = {
   label?: ReactNode;
@@ -23,11 +21,10 @@ export default function PageLoading({
   className,
   style,
 }: TProps) {
-  const { t } = useTranslate();
   const withLocaleLazyLabel = lazyLabel
     ? {
-        "load-app-data": t("loadingAppData"),
-        authenticating: t("authenticating"),
+        "load-app-data": "Loading application data",
+        authenticating: "Authenticating",
       }[lazyLabel]
     : "";
 
