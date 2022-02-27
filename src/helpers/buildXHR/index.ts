@@ -85,6 +85,7 @@ export const buildXHR = <
   const [isLoading, setLoading] = useState(false);
   const [response, setResponse] = useState<TResponse>(initialResponseValues);
   const [error, setError] = useState<AxiosError | null>(null);
+  const isExecuted = isLoading || response !== initialResponseValues;
 
   const execute = (
     cbProps?: TCallbackProps<TResponse, TRequestBody, TRequestQuery, TUrlParams>,
@@ -121,8 +122,9 @@ export const buildXHR = <
       isLoading,
       response: response as unknown,
       error,
-      // TODO: Is below isExecuted working?
-      isExecuted: isLoading || response !== initialResponseValues,
+      // TODO: Is below isExecuted, isSuccess working?
+      isExecuted,
+      isSuccess: !isLoading && isExecuted && !error,
     },
   ] as [typeof execute, TXhrReturn<TResponse>];
 };

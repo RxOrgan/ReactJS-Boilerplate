@@ -46,7 +46,10 @@ export const buildAsyncAction = <
 ) => (isNotifySuccess?: "notify-success") => {
   const dispatch = useDispatch();
   const { LOADING_LABEL, SUCCESS_LABEL, ERROR_LABEL, XHRHook } = actionConfigs;
-  const [executeXHR, { response, isLoading, error, isExecuted }] = XHRHook();
+  const [
+    executeXHR,
+    { response, isLoading, error, isExecuted, isSuccess },
+  ] = XHRHook();
 
   const executeAction = (
     props?: TCallbackProps<TResponse, TRequestBody, TRequestQuery, TUrlParams>,
@@ -80,6 +83,6 @@ export const buildAsyncAction = <
 
   return [
     executeAction,
-    { response: response as unknown, isLoading, error, isExecuted },
+    { response: response as unknown, isLoading, error, isExecuted, isSuccess },
   ] as [typeof executeAction, TXhrReturn<TResponse>];
 };

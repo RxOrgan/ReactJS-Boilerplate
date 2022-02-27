@@ -47,6 +47,7 @@ export type TXhrReturn<TResponse = AnyObject> = {
   response: ShallowExpand<TResponse>;
   error: AxiosError | null;
   isExecuted: boolean;
+  isSuccess: boolean;
 };
 
 export type TAsyncActionConfigs<
