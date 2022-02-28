@@ -2,12 +2,12 @@
 import { ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { AnyObjectSchema } from "yup";
+import { TObjectSchema } from "yup";
 
 type TProps = {
   children: ReactNode | ReactNode[];
-  validateSchema: AnyObjectSchema;
-  defaultValues?: AnyObject;
+  validateSchema: TObjectSchema;
+  defaultValues?: TObject;
 };
 /**
  * ReactHookForm

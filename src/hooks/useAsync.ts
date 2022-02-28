@@ -7,8 +7,8 @@ type TResult<TResponse> = {
     params,
     cbSuccess,
   }: {
-    data?: AnyObject;
-    params?: AnyObject;
+    data?: TObject;
+    params?: TObject;
     cbSuccess?: (res: TResponse) => void;
   }) => any;
   pending: boolean;
@@ -19,7 +19,7 @@ type TResult<TResponse> = {
  * useAsync
  * @param asyncFunction
  */
-export function useAsync<TResponse = AnyObject>(asyncFunction: Function) {
+export function useAsync<TResponse = TObject>(asyncFunction: Function) {
   const [pending, setPending] = useState(false);
   const [response, setResponse] = useState<any>({ data: {} });
   const [error, setError] = useState<any>(null);

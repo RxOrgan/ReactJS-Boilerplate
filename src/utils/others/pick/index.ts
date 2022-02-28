@@ -4,7 +4,7 @@
  * @param  {K extends Extract<keyof T, string>} keys
  * @returns {Partial<Pick<T, K>>}
  */
-export const pick = <T extends AnyObject, K extends Extract<keyof T, string>>(
+export const pick = <T extends TObject, K extends Extract<keyof T, string>>(
   obj: T,
   keys: readonly K[],
 ): Partial<Pick<T, K>> =>

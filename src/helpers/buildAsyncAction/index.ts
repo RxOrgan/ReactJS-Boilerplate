@@ -32,10 +32,10 @@ import { notify } from "@/utils/notify";
   });
  */
 export const buildAsyncAction = <
-  TResponse = AnyObject,
-  TRequestBody = AnyObject,
-  TRequestQuery = AnyObject,
-  TUrlParams = AnyObject,
+  TResponse = TObject,
+  TRequestBody = TObject,
+  TRequestQuery = TObject,
+  TUrlParams = TObject,
 >(
   actionConfigs: TAsyncActionConfigs<
     TResponse,

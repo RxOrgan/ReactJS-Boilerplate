@@ -4,7 +4,7 @@
  * @param input - Array Input
  * @param key - Primary key name
  */
-export function normalize(input: AnyObject[], key: string) {
+export function normalize(input: TObject[], key: string) {
   return input.reduce(
     ({ result: accResult, keys: accKeys }, current) => {
       const currentKey = current[key];
@@ -15,5 +15,5 @@ export function normalize(input: AnyObject[], key: string) {
       };
     },
     { result: {}, keys: [] },
-  ) as { result: AnyObject; keys: string[] };
+  ) as { result: TObject; keys: string[] };
 }

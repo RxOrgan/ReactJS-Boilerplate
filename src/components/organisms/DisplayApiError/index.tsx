@@ -1,5 +1,5 @@
 type TProps = {
-  error: AnyObject;
+  error: TObject;
 };
 /**
  * DisplayApiError

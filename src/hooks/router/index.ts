@@ -27,14 +27,14 @@ export const useRouter = () => {
       push: history.push,
       replace: history.replace,
       pathname,
-      state: (location.state || {}) as AnyObject,
+      state: (location.state || {}) as TObject,
       // Merge params and parsed query string into single "params" object
       // so that they can be used interchangeably.
       // Example: /:topic?sort=popular -> { topic: "react", sort: "popular" }
       params: {
         ...queryString.parse(location.search), // Convert string to object
         ...params,
-      } as AnyObject,
+      } as TObject,
       // Include match, location, history objects so we have
       // access to extra React Router functionality if needed.
       match,

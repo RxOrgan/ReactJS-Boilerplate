@@ -4,9 +4,9 @@ import { AxiosError, AxiosRequestConfig } from "axios";
 export type TParam = string | number;
 
 export type TPreprocessRequestPayload = {
-  data: AnyObject | null;
-  searchParams?: AnyObject | null;
-  others?: AnyObject;
+  data: TObject | null;
+  searchParams?: TObject | null;
+  others?: TObject;
 };
 
 type THttpMethod =
@@ -42,7 +42,7 @@ export type TCallbackProps<
   cbError?: (errors: AxiosError) => void;
 } & Omit<AxiosRequestConfig, "data" | "params">;
 
-export type TXhrReturn<TResponse = AnyObject> = {
+export type TXhrReturn<TResponse = TObject> = {
   isLoading: boolean;
   response: ShallowExpand<TResponse>;
   error: AxiosError | null;

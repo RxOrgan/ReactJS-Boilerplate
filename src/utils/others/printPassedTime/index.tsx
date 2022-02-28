@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 type TAcceptedDate = string | Date;
 type TProps = {
   time: TAcceptedDate;
-  t: (key: string, params?: AnyObject) => string;
+  t: (key: string, params?: TObject) => string;
 };
 /**
  * printPassedTime

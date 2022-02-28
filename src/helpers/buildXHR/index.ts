@@ -70,10 +70,10 @@ import { notify } from "@/utils/notify";
      });
  */
 export const buildXHR = <
-  TResponse = AnyObject,
-  TRequestBody = AnyObject,
-  TRequestQuery = AnyObject,
-  TUrlParams = AnyObject,
+  TResponse = TObject,
+  TRequestBody = TObject,
+  TRequestQuery = TObject,
+  TUrlParams = TObject,
 >(
   {
     initialResponseValues,
