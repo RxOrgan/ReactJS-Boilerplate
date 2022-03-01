@@ -6,6 +6,7 @@ import {
 } from "rc-notification/es/Notification";
 // components
 import Spinner from "@/components/atoms/Spinner";
+import { ReactNode } from "react";
 
 let notification: NotificationInstance;
 Notification.newInstance(
@@ -22,82 +23,85 @@ Notification.newInstance(
   },
 );
 
-type TConfigs = Omit<NoticeContent, "content">;
+type TConfigs =
+  | ({ delay?: number } & Omit<NoticeContent, "content">)
+  | undefined;
 type TLoadingConfigs = Omit<NoticeContent, "content" | "key" | "duration"> & {
   key: string;
 };
 
-const styles = {
-  display: "flex",
-  alignItems: "center",
-  color: "#000000d9",
-  padding: "0 3px",
-};
+const DELAY_FOR_REMOVE_PREVIOUS_NOTIFY = 200;
 
 export const notify = {
-  success: (content: string, configs?: TConfigs) =>
-    notification.notice({
-      duration: 2,
-      closable: false,
-      ...configs,
-      content: (
-        <div style={styles}>
-          <SuccessIcon />
-          <span style={{ marginLeft: 8 }}>{content}</span>
-        </div>
-      ),
-    }),
-  error: (content: string, configs?: TConfigs) =>
-    notification.notice({
-      duration: 10,
-      closable: true,
-      ...configs,
-      content: (
-        <div style={styles}>
-          <ErrorIcon />
-          <span style={{ marginLeft: 8 }}>{content}</span>
-        </div>
-      ),
-    }),
-  info: (content: string, configs?: TConfigs) =>
-    notification.notice({
-      duration: 4,
-      closable: true,
-      ...configs,
-      content: (
-        <div style={styles}>
-          <InfoIcon />
-          <span style={{ marginLeft: 8 }}>{content}</span>
-        </div>
-      ),
-    }),
-  warn: (content: string, configs?: TConfigs) =>
-    notification.notice({
-      duration: 4,
-      closable: true,
-      ...configs,
-      content: (
-        <div style={styles}>
-          <WarningIcon />
-          <span style={{ marginLeft: 8 }}>{content}</span>
-        </div>
-      ),
-    }),
+  success: (
+    content: ReactNode,
+    {
+      delay = DELAY_FOR_REMOVE_PREVIOUS_NOTIFY,
+      ...nativeConfigs
+    }: TConfigs = {},
+  ) =>
+    setTimeout(
+      () =>
+        notification.notice({
+          duration: 2,
+          closable: false,
+          ...nativeConfigs,
+          content: <Content content={content} icon="SuccessIcon" />,
+        }),
+      delay,
+    ),
+  error: (content: ReactNode, { delay = 0, ...nativeConfigs }: TConfigs = {}) =>
+    setTimeout(
+      () =>
+        notification.notice({
+          duration: 15,
+          closable: true,
+          ...nativeConfigs,
+          content: <Content content={content} icon="ErrorIcon" />,
+        }),
+      delay,
+    ),
+  info: (content: ReactNode, { delay = 0, ...nativeConfigs }: TConfigs = {}) =>
+    setTimeout(
+      () =>
+        notification.notice({
+          duration: 4,
+          closable: true,
+          ...nativeConfigs,
+          content: <Content content={content} icon="InfoIcon" />,
+        }),
+      delay,
+    ),
+  warn: (content: ReactNode, { delay = 0, ...nativeConfigs }: TConfigs = {}) =>
+    setTimeout(
+      () =>
+        notification.notice({
+          duration: 4,
+          closable: true,
+          ...nativeConfigs,
+          content: <Content content={content} icon="WarningIcon" />,
+        }),
+      delay,
+    ),
   /**
    * pure
    * @description Show notification without icon
    */
-  pure: (content: string, configs?: TConfigs) =>
-    notification.notice({
-      duration: 4,
-      closable: true,
-      ...configs,
-      content: (
-        <div style={styles}>
-          <span style={{ marginLeft: 8 }}>{content}</span>
-        </div>
-      ),
-    }),
+  pure: (
+    content: ReactNode,
+    {
+      delay = DELAY_FOR_REMOVE_PREVIOUS_NOTIFY,
+      ...nativeConfigs
+    }: TConfigs = {},
+  ) =>
+    setTimeout(() => {
+      notification.notice({
+        duration: 4,
+        closable: true,
+        ...nativeConfigs,
+        content: <Content content={content} />,
+      });
+    }, delay),
   /**
    * loading
    * @description Create a loading notification that can be closed later
@@ -108,17 +112,12 @@ export const notify = {
    * // Close notify by call
    * notify.remove("a-unique-key");
    */
-  loading: (content: string, configs: TLoadingConfigs) =>
+  loading: (content: ReactNode, configs: TLoadingConfigs) =>
     notification.notice({
       duration: 0,
       closable: true,
       ...configs,
-      content: (
-        <div style={styles}>
-          <Spinner />
-          <span style={{ marginLeft: 8 }}>{content}</span>
-        </div>
-      ),
+      content: <Content content={content} icon="Spinner" />,
     }),
   /**
    * destroy
@@ -135,6 +134,52 @@ export const notify = {
     notification.removeNotice(key);
   },
 };
+
+/**
+ * Content
+ */
+function Content({
+  content,
+  icon,
+}: {
+  content: ReactNode;
+  icon?: "ErrorIcon" | "InfoIcon" | "SuccessIcon" | "WarningIcon" | "Spinner";
+}) {
+  let displayContent: ReactNode = content;
+  if (typeof content === "string")
+    displayContent = (
+      <div>
+        {content.split("\n").map((item, i) => (
+          <div key={i}>{item}</div>
+        ))}
+      </div>
+    );
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        color: "#000000d9",
+        padding: "0 3px",
+      }}
+    >
+      <span style={{ marginRight: 8 }}>
+        {
+          {
+            SuccessIcon: <SuccessIcon />,
+            ErrorIcon: <ErrorIcon />,
+            InfoIcon: <InfoIcon />,
+            WarningIcon: <WarningIcon />,
+            Spinner: <Spinner />,
+            default: "",
+          }[icon || "default"]
+        }
+      </span>
+      {displayContent}
+    </div>
+  );
+}
 
 // Icons
 function ErrorIcon() {
@@ -176,7 +221,7 @@ function InfoIcon() {
   );
 }
 
-function SuccessIcon() {
+export function SuccessIcon() {
   return (
     <svg
       viewBox="64 64 896 896"
