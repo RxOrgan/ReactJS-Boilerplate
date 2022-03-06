@@ -1,12 +1,12 @@
 // libs
-import { FocusEvent, ChangeEvent } from 'react';
-import { Control, Controller, useFormContext } from 'react-hook-form';
+import { FocusEvent, ChangeEvent } from "react";
+import { Control, Controller, useFormContext } from "react-hook-form";
 // components
 import CheckboxWithLabel, {
   TCheckboxWithLabelProps,
-} from '../CheckboxWithLabel';
+} from "../CheckboxWithLabel";
 
-type TProps = Omit<TCheckboxWithLabelProps, 'id' | 'name'> & {
+type TProps = Omit<TCheckboxWithLabelProps, "id" | "name"> & {
   name: string;
   control: Control;
   // Add effects that run after native events is fired

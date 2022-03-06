@@ -1,11 +1,11 @@
 // libs
-import { FocusEvent } from 'react';
-import { SelectChangeEvent } from '@mui/material';
-import { Control, Controller } from 'react-hook-form';
+import { FocusEvent } from "react";
+import { SelectChangeEvent } from "@mui/material";
+import { Control, Controller } from "react-hook-form";
 // components
-import SelectWithLabel, { TSelectWithLabelProps } from '../SelectWithLabel';
+import SelectWithLabel, { TSelectWithLabelProps } from "../SelectWithLabel";
 
-type TProps = Omit<TSelectWithLabelProps, 'id' | 'name'> & {
+type TProps = Omit<TSelectWithLabelProps, "id" | "name"> & {
   name: string;
   control: Control;
   // Add effects that run after native events is fired

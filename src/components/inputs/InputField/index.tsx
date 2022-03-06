@@ -4,7 +4,7 @@ import { KeyboardEvent, ChangeEvent, FocusEvent } from "react";
 import { TextField, TextFieldProps } from "@mui/material";
 import { Control, Controller } from "react-hook-form";
 // others
-import classes from "InputField.module.scss";
+import classes from "./InputField.module.scss";
 
 type TProps = {
   name: string;

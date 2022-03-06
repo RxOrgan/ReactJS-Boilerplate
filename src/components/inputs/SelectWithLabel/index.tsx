@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import clsx from "clsx";
 // others
-import classes from "SelectWithLabel.module.scss";
+import classes from "./SelectWithLabel.module.scss";
 
 export type TSelectWithLabelProps = {
   children: ReactNode | ReactNode[];

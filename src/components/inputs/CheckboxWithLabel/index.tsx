@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { Checkbox, CheckboxProps } from "@mui/material";
 import { ForwardedRef, forwardRef, ReactNode } from "react";
 // others
-import classes from "CheckboxWithLabel.module.scss";
+import classes from "./CheckboxWithLabel.module.scss";
 
 export type TCheckboxWithLabelProps = {
   id: string;

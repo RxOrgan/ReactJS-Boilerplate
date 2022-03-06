@@ -1,10 +1,10 @@
 // libs
-import { Autocomplete, AutocompleteProps, TextField } from '@mui/material';
-import { Control, Controller } from 'react-hook-form';
+import { Autocomplete, AutocompleteProps, TextField } from "@mui/material";
+import { Control, Controller } from "react-hook-form";
 
 type TProps = Omit<
   AutocompleteProps<string, boolean, boolean, boolean>,
-  'id' | 'name' | 'renderInput' | 'options'
+  "id" | "name" | "renderInput" | "options"
 > & {
   name: string;
   control: Control;
