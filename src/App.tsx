@@ -5,7 +5,9 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import appRoutes from "@/routes";
 // providers
 import { ConfirmProvider, ReduxProvider } from "./providers";
+import { ThemeProvider } from "@mui/material/styles";
 // others
+import { theme } from "./themes";
 import { AppEffects } from "./AppEffects";
 import { RecursiveRender } from "@/utils/others";
 import "@/styles/index.css";
@@ -19,6 +21,7 @@ export default function App() {
       structure={[
         [BrowserRouter, {}],
         [Suspense, { fallback: "Suspensed" }],
+        [ThemeProvider, { theme }],
         [ConfirmProvider, {}],
         [ReduxProvider, {}],
         [Switch, {}],
