@@ -8,13 +8,14 @@ import classes from "./InputField.module.scss";
 
 type TProps = {
   name: string;
-  control: Control;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  control: Control<any>;
   onPressEnter?: (e: KeyboardEvent<HTMLDivElement>) => void;
   // Add effects that run after native events is fired
   sideEffect?: {
     // Add effects that run after input value change
     afterChange?: (
-      e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => void;
     // Add effects that run after input is blured
     afterBlur?: (e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;

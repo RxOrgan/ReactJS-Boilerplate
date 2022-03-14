@@ -8,7 +8,8 @@ import CheckboxWithLabel, {
 
 type TProps = Omit<TCheckboxWithLabelProps, "id" | "name"> & {
   name: string;
-  control: Control;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  control: Control<any>;
   // Add effects that run after native events is fired
   sideEffect?: {
     // Add effects that run after input value change

@@ -7,7 +7,8 @@ type TProps = Omit<
   "id" | "name" | "renderInput" | "options"
 > & {
   name: string;
-  control: Control;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  control: Control<any>;
   label?: string;
   options: string[];
   required?: boolean;
