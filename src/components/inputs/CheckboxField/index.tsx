@@ -18,9 +18,9 @@ type TProps = Omit<TCheckboxWithLabelProps, "id" | "name"> & {
   };
 };
 /**
- * ChecboxField
+ * CheckboxField
  * @example
- * <ChecboxField {...register("field-name")} label="Label" />
+ * <CheckboxField {...register("field-name")} label="Label" />
  */
 const CheckboxField = ({ name, control, sideEffect, ...rest }: TProps) => {
   const { setValue } = useFormContext();
