@@ -1,7 +1,7 @@
 // libs
-import classNames from "classnames";
 import { HTMLAttributes } from "react";
 import { Props, ReactSVG } from "react-svg";
+import clsx from "clsx";
 // components
 import Spinner from "@/components/atoms/Spinner";
 // types
@@ -9,11 +9,15 @@ import { SvgTypes } from "./type";
 // others
 import classes from "./Svg.module.scss";
 
-type PROPS = {
-  type: SvgTypes;
-} & Omit<Props, "src" | "loading" | "wrapper"> &
-  HTMLAttributes<any>;
-
+type TReactSvg = Omit<Props, "src" | "loading" | "wrapper" | "ref"> &
+  HTMLAttributes<"span">;
+type PROPS =
+  | ({
+      type: SvgTypes;
+    } & TReactSvg)
+  | ({
+      src: string;
+    } & TReactSvg);
 /**
  * Svg
  * @description Collections of SVG files from feather icons store in /public/icons
@@ -27,7 +31,7 @@ export default function Svg({ type, className, ...props }: PROPS) {
       src={`/icons/${type}.svg`}
       loading={Spinner}
       wrapper="span"
-      className={classNames(classes.root, className)}
+      className={clsx(classes.root, className)}
       {...props}
     />
   );
