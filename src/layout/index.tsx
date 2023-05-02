@@ -1,6 +1,6 @@
 // libs
 import { ReactNode } from "react";
-import Spinner from "../atoms/Spinner";
+import Spinner from "../components/atoms/Spinner";
 // others
 import classes from "./Layout.module.scss";
 
